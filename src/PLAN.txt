@@ -1,11 +1,11 @@
 Plan for Breakout game, CS308 Spring 2018
 by Siyuan Chen sc456
 
-Interesting variant: Blocks
-	Blocks are one of the most fundamental elements in the game. Besides the basic function of a target, 
-we could incorporate other features for the blocks. Some blocks are made of iron and could never be broken;
-some are like "bombs" that make the game harder, so the player should try to hit them last; some give 
-Power-ups. They could potentially bring a lot of variability to the game.
+Interesting variant: Pinball Breakout
+	Pinball Breakout is interesting in that it combines two games perfectly. It also makes the original
+Breakout more fun and more complicated to control since the player could now control the two "flippers" 
+in addition to the paddle. The existence of "targets" and "bumpers" allows the player to obtain more points 
+thus making the game more competitive.
 
 Types of blocks:
 1. Glass: most simple block that disappears after one hit.
@@ -65,10 +65,19 @@ a Leaderboard button to display the Leaderboard.
 	The failure screen just says that player failed and kindly asks if the player wants to play again. As
 for scores, well, scores are not awarded to losers :<
 	
-Extra feature: Score system and Leaderboard:
+Extra feature: 
+1. Score system and Leaderboard:
 	Scores are awarded both for breaking blocks and time used to complete the game. (iron blocks award a lot
 of points if the player has used the iron-breaker Power-up)
 	Leaderboard shows the recent top 5 highest scores and the player obtaining that score.
 	
-	The addition of the Leaderboard would allow friends to compete in playing the game; it also grants the 
+Reason: The addition of the Leaderboard would allow friends to compete in playing the game; it also grants the 
 player a motivation to challenge the game again after completing it.
+
+2.	Pinball elements
+	Addition of two flippers that on two edges of the scene that could rotate around a pivot and change the 
+bouncer's direction (just like those in Pinball) and several targets that if hit, could award points to 
+the player.
+
+Reason: Just like discussed above, adding the two flippers could make the game more fun as the controls are 
+more complicated.
