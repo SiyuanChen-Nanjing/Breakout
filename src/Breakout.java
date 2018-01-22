@@ -424,7 +424,7 @@ public class Breakout extends Application {
         }
     }
     
-    private void intersectPaddle() {
+    private void intersectPaddle(double elapsedTime) {
     		if (myBouncer.getBouncerXSpeed() == 0 && myBouncer.getBouncerYSpeed() == 0) {
 			myBouncer.getMyCircle().setCenterX(myPaddle.getX()+myPaddle.getWidth()/2);
 			myBouncer.getMyCircle().setCenterY(myPaddle.getY() - 6);
@@ -432,7 +432,7 @@ public class Breakout extends Application {
         if (myBouncer.getMyCircle().getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
     			myBouncer.setBouncerYSpeed(Math.abs(myBouncer.getBouncerYSpeed()) * -1);
         }
-        else if (myBouncer.getMyCircle().getCenterY() + myBouncer.getMyCircle().getRadius() > SIZE - 3) {
+        else if (myBouncer.getMyCircle().getCenterY() + myBouncer.getMyCircle().getRadius() + myBouncer.getBouncerYSpeed() * elapsedTime > SIZE - 3) {
     			myRoot.getChildren().remove(myBouncer.getMyCircle());
     			if (numLife>0) {
     				resetPaddle();
@@ -452,7 +452,7 @@ public class Breakout extends Application {
     }
     
     private void step (double elapsedTime) {
-        intersectPaddle();
+        intersectPaddle(elapsedTime);
         intersectFlipper();
         checkForPowerups(elapsedTime);
         changeLevel();
@@ -477,7 +477,7 @@ public class Breakout extends Application {
         }
         else if (code == KeyCode.SPACE) {
         		if (myBouncer.getBouncerXSpeed() == 0 && myBouncer.getBouncerYSpeed() == 0)
-        			myBouncer.initialize(80, -100);
+        			myBouncer.initialize(80, -80);
         		else {
         			flip();
         		}
