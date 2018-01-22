@@ -60,7 +60,7 @@ public class Breakout extends Application {
     private TreeMap<Integer,String> Leaderboard =  new TreeMap<>(Collections.reverseOrder());
     private boolean isPaddleWarp = false;
     private int paddleSpeed = 15;
-    private int myCurrentScene = 1;
+    private int myCurrentScene;
 
     private Label myLifeLabel;
     private Label myScoreLabel;
@@ -105,6 +105,9 @@ public class Breakout extends Application {
     		start.setText("Breakout");
     		start.setOnAction(value -> {
     			myName = playerName.getText();
+    			myCurrentScene = 1;
+    			score = 0;
+    			numLife = 3;
     			myStage.setScene(setupGameScene(SIZE,SIZE,BACKGROUND,setupLevel1Blocks()));
     		});
     		root.getChildren().add(start);
@@ -312,10 +315,6 @@ public class Breakout extends Application {
     		restart.setLayoutY(200);
     		
     		restart.setOnAction(value -> {
-    			numLife = 3;
-    			numBlocks = 1;
-    			score = 0;
-    			myCurrentScene = 1;
     			myStage.setScene(myStart);
     		});
     		return restart;
@@ -495,7 +494,9 @@ public class Breakout extends Application {
         		myCurrentScene = 3;
         		myStage.setScene(setupGameScene(SIZE,SIZE,BACKGROUND,setupLevel3Blocks()));
         }
-        else if (code == KeyCode.W) myStage.setScene(setupEndScene());
+        else if (code == KeyCode.W) {
+        		myStage.setScene(setupEndScene());
+        }
         else if (code == KeyCode.F) {
         		myBouncer.setBouncerXSpeed((int)(myBouncer.getBouncerXSpeed() * 1.8));
         		myBouncer.setBouncerYSpeed((int)(myBouncer.getBouncerYSpeed() * 1.8));
