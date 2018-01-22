@@ -64,6 +64,7 @@ public class Breakout extends Application {
 
     private Label myLifeLabel;
     private Label myScoreLabel;
+    private Label myLevelLabel;
     private Group myRoot;
     private Stage myStage;
     private Scene myLeaderboard;
@@ -121,12 +122,13 @@ public class Breakout extends Application {
         myBouncer = new Bouncer(SIZE/2, SIZE*29/30 + 0.5, 0, 0, BOUNCER_SIZE);
         myLifeLabel = new Label("Remaining lives: " + numLife);
         myScoreLabel = new Label("Score: " + score); myScoreLabel.setLayoutX(200);
+        myLevelLabel = new Label("Level: " + myCurrentScene); myLevelLabel.setLayoutX(300);
         myBlocks = blocks;
         setFlippers();
         root.getChildren().add(myBouncer.getMyCircle());
         root.getChildren().add(myPaddle);
         for (ArrayList<Block> column : myBlocks) for (Block b : column) root.getChildren().add(b.getMyBlock());
-        root.getChildren().add(myLifeLabel); root.getChildren().add(myScoreLabel);
+        root.getChildren().add(myLifeLabel); root.getChildren().add(myScoreLabel); root.getChildren().add(myLevelLabel);
         root.getChildren().add(myLeftFlipper); root.getChildren().add(myRightFlipper);
         myRoot = root;
         scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -374,7 +376,7 @@ public class Breakout extends Application {
     private void breakBombs(Block b) {
     		if (b.getMyType() == 5) {
 			if (Math.random()<0.5) myPaddle.setWidth(myPaddle.getWidth()*0.8);
-			else myBouncer.setBouncerXSpeed(myBouncer.getBouncerXSpeed() * 2);
+			else myBouncer.setBouncerXSpeed(myBouncer.getBouncerXSpeed() * 4);
 		}
     }
     
@@ -388,7 +390,7 @@ public class Breakout extends Application {
     				else if (myPowerups.get(m).getMyType()==2)
     					isPaddleWarp = true;
     				else if (myPowerups.get(m).getMyType()==3)
-    					paddleSpeed += 5;
+    					paddleSpeed += 7;
     				else if (myPowerups.get(m).getMyType()==4)
     					myBouncer.setIronDestroyer(true);
     				else if (myPowerups.get(m).getMyType()==5)
@@ -458,6 +460,7 @@ public class Breakout extends Application {
         myBouncer.update(elapsedTime);
         myLifeLabel.setText("Remaining lives: " + numLife);
         myScoreLabel.setText("Score: " + score);
+        myLevelLabel.setText("Level: " + myCurrentScene);
     }
     
     private void handleKeyInput (KeyCode code) {
