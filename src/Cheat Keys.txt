@@ -1,0 +1,6 @@
+F: makes bouncer travel 1.8x faster in both x and y directions;
+R: reset paddle and bouncer;
+W: win the game;
+L: get an additional life;
+I: makes bouncer able to destroy iron blocks;
+1-3: jump to level 1-3
