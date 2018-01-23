@@ -7,6 +7,12 @@ public class Powerup {
 	private final int RADIUS = 5;
 	private int myType;
 	
+	/**
+	 * default constructor for Powerup
+	 * @param xpos x coordinate of center
+	 * @param ypos y coordinate of center
+	 * @param type type number
+	 */
 	public Powerup(double xpos, double ypos, int type) {
 		setMyPowerup(new Circle(xpos, ypos, RADIUS));
 		switch (type) {
@@ -24,6 +30,10 @@ public class Powerup {
 		myType = type;
 	}
 	
+	/**
+	 * make the powerup drop
+	 * @param elapsedTime time elapsed per frame
+	 */
 	public void update(double elapsedTime) {
 		getMyPowerup().setCenterY(elapsedTime * SPEED_Y + getMyPowerup().getCenterY());
 	}

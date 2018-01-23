@@ -14,6 +14,14 @@ public class Block {
 	private final Paint COLOR_BOMB = Color.RED;
 	private boolean isPowerup = false;
 	
+	/**
+	 * default constructor for Block
+	 * @param X_Position x coordinate for upper left corner of block
+	 * @param Y_Position y coordinate for upper left corner of block
+	 * @param a width 
+	 * @param b height
+	 * @param type type number
+	 */
 	public Block(double X_Position, double Y_Position, double a, double b, int type) {
 		myBlock = new Rectangle(X_Position, Y_Position, a, b);
 		myBlock.setArcHeight(10);

@@ -9,6 +9,14 @@ public class Bouncer {
 	private boolean isIronDestroyer = false;
 	private final int SIZE = 400;
 	
+	/**
+	 * default constructor for Bouncer
+	 * @param x x coordinate of center
+	 * @param y y coordinate of center
+	 * @param speed_x x-direction speed
+	 * @param speed_y y-direction speed
+	 * @param radius radius of bouncer
+	 */
 	public Bouncer(double x, double y, int speed_x, int speed_y, double radius) {
 		setBouncerXSpeed(speed_x);
 		setBouncerYSpeed(speed_y);
@@ -16,7 +24,10 @@ public class Bouncer {
 		setMyCircle(new Circle(x,y, radius));
 	}
 	
-	// update positions after checking if a bouncer will hit the wall
+	/**
+	 * update positions after checking if a bouncer will hit the wall
+	 * @param elapsedTime time elapsed per frame
+	 */
 	public void update(double elapsedTime) {
 	    double updatedXPosition = getMyCircle().getCenterX() + getMyCircle().getRadius() + getBouncerXSpeed() * elapsedTime;
 		double updatedYPosition = getMyCircle().getCenterY() + getMyCircle().getRadius() + getBouncerYSpeed() * elapsedTime;
@@ -27,7 +38,12 @@ public class Bouncer {
     		getMyCircle().setCenterY(getMyCircle().getCenterY() + getBouncerYSpeed() * elapsedTime);
 	}
 	
-	// detect collision between bouncer and block; change direction accordingly
+	/**
+	 * detect collision between bouncer and block; change direction accordingly
+	 * @param elapsedTime time elapsed per frame
+	 * @param b the Block to detect
+	 * @return whether the Block is hit
+	 */
 	public boolean hitBlock(double elapsedTime, Block b) {
 		double xspeed = getBouncerXSpeed();
 		double yspeed = getBouncerYSpeed();
@@ -43,6 +59,11 @@ public class Bouncer {
 		return false;
 	}
 	
+	/**
+	 * initialize the bouncer to make it move
+	 * @param speed_x x-direction speed
+	 * @param speed_y y-direction speed
+	 */
 	public void initialize(int speed_x, int speed_y) {
 		setBouncerXSpeed(speed_x);
 		setBouncerYSpeed(speed_y);
