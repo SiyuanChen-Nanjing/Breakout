@@ -1,5 +1,5 @@
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Create Powerup object to be used in Breakout game. Powerups have 5 types and each type has distinct
@@ -8,11 +8,10 @@ import javafx.scene.shape.Circle;
  *
  */
 
-public class Powerup {
+public abstract class Powerup {
 	private Circle myPowerup;
 	private final int SPEED_Y = 70;
 	private final int RADIUS = 5;
-	private int myType;
 	
 	/**
 	 * default constructor for Powerup
@@ -20,21 +19,8 @@ public class Powerup {
 	 * @param ypos y coordinate of center
 	 * @param type type number
 	 */
-	public Powerup(double xpos, double ypos, int type) {
+	public Powerup(double xpos, double ypos) {
 		myPowerup = new Circle(xpos, ypos, RADIUS);
-		switch (type) {
-		case 1:getMyPowerup().setFill(Color.RED);
-		break;
-		case 2:getMyPowerup().setFill(Color.AQUA);
-		break;
-		case 3:getMyPowerup().setFill(Color.BROWN);
-		break;
-		case 4:getMyPowerup().setFill(Color.GAINSBORO);
-		break;
-		case 5:getMyPowerup().setFill(Color.CHARTREUSE);
-		break;
-		}
-		myType = type;
 	}
 	
 	/**
@@ -44,14 +30,6 @@ public class Powerup {
 	public void update(double elapsedTime) {
 		getMyPowerup().setCenterY(elapsedTime * SPEED_Y + getMyPowerup().getCenterY());
 	}
-	
-	/**
-	 * getter for myType
-	 * @return myType
-	 */
-	public int getMyType() {
-		return myType;
-	}
 
 	/**
 	 * getter for myPowerup
@@ -60,4 +38,6 @@ public class Powerup {
 	public Circle getMyPowerup() {
 		return myPowerup;
 	}
+	
+	public abstract void takeEffect(Rectangle paddle, Bouncer bouncer, int life, int paddle_speed, boolean isWarp);
 }

@@ -143,7 +143,13 @@ public class Breakout extends Application {
     
     // initialize a powerup at specific position after a block containing a powerup is hit
     private void initializePowerup(double xpos, double ypos) {
-		Powerup powerup = new Powerup(xpos, ypos, (int)(Math.random()*4)+1);
+    		double random = Math.random();
+    		Powerup powerup;
+    		if (random <= 0.2) powerup = new RedPowerup(xpos, ypos);
+    		else if (random <= 0.4) powerup = new BrownPowerup(xpos, ypos);
+    		else if (random <= 0.6) powerup = new ChartreusePowerup(xpos, ypos);
+    		else if (random <= 0.8) powerup = new GainsboroPowerup(xpos, ypos);
+    		else powerup = new AquaPowerup(xpos, ypos);
 		myPowerups.add(powerup);
 		myRoot.getChildren().add(powerup.getMyPowerup());
     }
@@ -395,16 +401,7 @@ public class Breakout extends Application {
         for (int m = 0; m < myPowerups.size(); m++) {
     			myPowerups.get(m).update(elapsedTime);
     			if (myPowerups.get(m).getMyPowerup().getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
-    				if (myPowerups.get(m).getMyType()==1)
-    					myPaddle.setWidth(myPaddle.getWidth()*1.3);
-    				else if (myPowerups.get(m).getMyType()==2)
-    					isPaddleWarp = true;
-    				else if (myPowerups.get(m).getMyType()==3)
-    					paddleSpeed += 7;
-    				else if (myPowerups.get(m).getMyType()==4)
-    					myBouncer.setIronDestroyer(true);
-    				else if (myPowerups.get(m).getMyType()==5)
-    					numLife++;
+    				myPowerups.get(m).takeEffect(myPaddle, myBouncer, numLife, paddleSpeed, isPaddleWarp);
     				myRoot.getChildren().remove(myPowerups.get(m).getMyPowerup());
     				myPowerups.remove(m);
     			}
