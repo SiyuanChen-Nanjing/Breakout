@@ -22,9 +22,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * main game file for Breakout game
+ * Main executable game file for Breakout game. This class takes use of the classes Block, Bouncer and
+ * Powerup.
+ * 
  * based on ExampleBounce.java by Robert Duvall
- * @author Siyuan
+ * @author Siyuan Chen
  *
  */
 
@@ -51,6 +53,7 @@ public class Breakout extends Application {
     		+ "\tGray: makes the paddle iron-breakable\n"
     		+ "\tGreen: awards additional life";
     	    
+    // some variables to remember
     private ArrayList<ArrayList<Block>> myBlocks;
     private ArrayList<Powerup> myPowerups = new ArrayList<>();
     private int numBlocks;
@@ -117,7 +120,7 @@ public class Breakout extends Application {
     		return scene;
     }
     
-    // create scene for each level of the game; could decide which level by inputing different block configurations
+    // create a scene for each level of the game; each level is distinct from each other by the inputting block configurations
     private Scene setupGameScene (int width, int height, Paint background, ArrayList<ArrayList<Block>> blocks) {
         Group root = new Group();
         Scene scene = new Scene(root, width, height, background);
@@ -138,12 +141,14 @@ public class Breakout extends Application {
         return scene;
     }
     
+    // initialize a powerup at specific position after a block containing a powerup is hit
     private void initializePowerup(double xpos, double ypos) {
 		Powerup powerup = new Powerup(xpos, ypos, (int)(Math.random()*4)+1);
 		myPowerups.add(powerup);
 		myRoot.getChildren().add(powerup.getMyPowerup());
     }
     
+    // create the block configurations for Level 1; used as an input to setupGameScene();
     private ArrayList<ArrayList<Block>> setupLevel1Blocks() {
 		ArrayList<ArrayList<Block>> blocks = new ArrayList<>();
 		blocks = new ArrayList<ArrayList<Block>>();
@@ -161,6 +166,7 @@ public class Breakout extends Application {
 		return blocks;
     }
     
+    // create the block configurations for Level 2; used as an input to setupGameScene();
     private ArrayList<ArrayList<Block>> setupLevel2Blocks() {
     		ArrayList<ArrayList<Block>> blocks = new ArrayList<>();
         blocks = new ArrayList<ArrayList<Block>>();
@@ -179,7 +185,7 @@ public class Breakout extends Application {
         numBlocks = count;
         return blocks;
     }
-    
+    // create the block configurations for Level 3; used as an input to setupGameScene();
     private ArrayList<ArrayList<Block>> setupLevel3Blocks() {
     		ArrayList<ArrayList<Block>> blocks = new ArrayList<>();
         blocks = new ArrayList<ArrayList<Block>>();
@@ -212,6 +218,7 @@ public class Breakout extends Application {
 		return type;
     }
     
+    // reset the paddle and bouncer to their default state and location after a bouncer is lost
     private void resetPaddle() {
     		myRoot.getChildren().remove(myPaddle);
     		myPaddle = new Rectangle(SIZE/2 - 20, SIZE*29/30 + 0.5, 40, 1);
@@ -253,6 +260,7 @@ public class Breakout extends Application {
     		return scene;
     }
     
+    // initialize the flippers and rotate them to their default orientation
     private void setFlippers() {
     		myLeftFlipper = new Rectangle(0,360,40,1);
         myRightFlipper = new Rectangle(360,360,40,1);
@@ -309,6 +317,7 @@ public class Breakout extends Application {
     		return lb;
     }
     
+    // create button to restart the game, ie reach the start scene
     private Button restart() {
     		Button restart = new Button("Restart");
     		restart.setLayoutX(160);
@@ -320,6 +329,7 @@ public class Breakout extends Application {
     		return restart;
     }
     
+    // create button to exit the game and close the window
     private Button exit(double ypos) {
     		Button exit = new Button("Exit game");
     		exit.setLayoutX(160);
@@ -331,7 +341,8 @@ public class Breakout extends Application {
     		return exit;
     }
     
-    // update blocks, check for collisions between blocks and bouncer
+    // Check for collisions between blocks and bouncer. If a collision happens, update or remove a block
+    // based on its type
     private void breakBlocks(double elapsedTime) {
         for (ArrayList<Block> column : myBlocks) {
         		for (int n = 0; n < column.size(); n++) {
@@ -350,7 +361,7 @@ public class Breakout extends Application {
         }
     }
     
-    // update blocks that are hit according to its type
+    // update blocks that are hit according to their types
     private void updateBlock(ArrayList<Block> column, int n) {
     		breakBombs(column.get(n));
 		column.get(n).setRemainingHits(column.get(n).getRemainingHits() - 1);
@@ -379,7 +390,7 @@ public class Breakout extends Application {
 		}
     }
     
-    // check for movement and action of powerups
+    // make the Powerups move and check their interaction with the paddle or disappearance
     private void checkForPowerups(double elapsedTime) {
         for (int m = 0; m < myPowerups.size(); m++) {
     			myPowerups.get(m).update(elapsedTime);
@@ -404,7 +415,7 @@ public class Breakout extends Application {
         }
     }
     
-    // check if a level has been completed
+    // check if a level has been completed and if so, go to the next level
     private void changeLevel() {
         if (numBlocks<=0) {
     			if (myCurrentScene==1) {
@@ -423,36 +434,32 @@ public class Breakout extends Application {
         }
     }
     
-    private void intersectPaddle(double elapsedTime) {
-    		if (myBouncer.getBouncerXSpeed() == 0 && myBouncer.getBouncerYSpeed() == 0) {
-			myBouncer.getMyCircle().setCenterX(myPaddle.getX()+myPaddle.getWidth()/2);
-			myBouncer.getMyCircle().setCenterY(myPaddle.getY() - 6);
-		}
-        if (myBouncer.getMyCircle().getBoundsInParent().intersects(myPaddle.getBoundsInParent())) {
-    			myBouncer.setBouncerYSpeed(Math.abs(myBouncer.getBouncerYSpeed()) * -1);
-        }
+    // move the bouncer when it stays on the paddle, detect collisions between the paddle and the bouncer,
+    // reset the paddle when the bouncer is lost;
+    private void interactBouncerPaddle(double elapsedTime) {
+    		if (myBouncer.getBouncerXSpeed() == 0 && myBouncer.getBouncerYSpeed() == 0) myBouncer.moveWithPaddle(myPaddle);
+        if (myBouncer.hitPaddle(myPaddle)) myBouncer.setBouncerYSpeed(Math.abs(myBouncer.getBouncerYSpeed()) * -1);
         else if (myBouncer.getMyCircle().getCenterY() + myBouncer.getMyCircle().getRadius() + myBouncer.getBouncerYSpeed() * elapsedTime > SIZE - 3) {
-    			myRoot.getChildren().remove(myBouncer.getMyCircle());
-    			if (numLife>0) {
-    				resetPaddle();
-    				numLife--;
-    			}
-    			else {
-    				myStage.setScene(setupFailureScene());
-    			}
+    			loseLife(elapsedTime);
         }
     }
     
-    private void intersectFlipper() {
-    		if (myBouncer.getMyCircle().getBoundsInParent().intersects(myLeftFlipper.getBoundsInParent()) ||
-        		myBouncer.getMyCircle().getBoundsInParent().intersects(myRightFlipper.getBoundsInParent())) {
-    			myBouncer.setBouncerYSpeed(Math.abs(myBouncer.getBouncerYSpeed())  * -1);
-    		}
+    // reset paddle and bouncer, reduce remaining life or lose the game when a bouncer is lost;
+    private void loseLife(double elapsedTime) {
+    		myRoot.getChildren().remove(myBouncer.getMyCircle());
+		if (numLife>0) {
+			resetPaddle();
+			numLife--;
+		}
+		else {
+			myStage.setScene(setupFailureScene());
+		}
     }
     
+    // things to check and update in each frame of the game
     private void step (double elapsedTime) {
-        intersectPaddle(elapsedTime);
-        intersectFlipper();
+        interactBouncerPaddle(elapsedTime);
+        myBouncer.intersectFlipper(myLeftFlipper, myRightFlipper);
         checkForPowerups(elapsedTime);
         changeLevel();
         breakBlocks(elapsedTime);
@@ -462,6 +469,7 @@ public class Breakout extends Application {
         myLevelLabel.setText("Level: " + myCurrentScene);
     }
     
+    // manipulate events when various keys are pressed
     private void handleKeyInput (KeyCode code) {
         if (code == KeyCode.RIGHT) {
         	 	if ((myPaddle.getX() + myPaddle.getWidth() + paddleSpeed) <= SIZE) {

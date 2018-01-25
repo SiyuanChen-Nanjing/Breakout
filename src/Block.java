@@ -2,6 +2,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Create a block to be used in the Breakout game. A block has five types and may contain powerups.
+ * @author Siyuan Chen
+ *
+ */
+
 public class Block {
 	
 	private Rectangle myBlock;
@@ -46,34 +52,50 @@ public class Block {
 		getMyBlock().setStroke(Color.BLACK);
 	}
 
+	/**
+	 * getter for myBlock
+	 * @return myBlock
+	 */
 	public Rectangle getMyBlock() {
 		return myBlock;
 	}
 
-	public void setMyBlock(Rectangle myBlock) {
-		this.myBlock = myBlock;
-	}
-
+	/**
+	 * getter for myType
+	 * @return myType
+	 */
 	public int getMyType() {
 		return myType;
 	}
 
-	public void setMyType(int myType) {
-		this.myType = myType;
-	}
-
+	/**
+	 * getter for remainingHits
+	 * @return remainingHits
+	 */
 	public int getRemainingHits() {
 		return remainingHits;
 	}
 
+	/**
+	 * setter for remainingHits
+	 * @param remainingHits input hits
+	 */
 	public void setRemainingHits(int remainingHits) {
 		this.remainingHits = remainingHits;
 	}
 
+	/**
+	 * getter for isPowerup
+	 * @return isPowerup
+	 */
 	public boolean isPowerup() {
 		return isPowerup;
 	}
 
+	/**
+	 * setter for isPowerup
+	 * @param isPowerup input boolean
+	 */
 	public void setPowerup(boolean isPowerup) {
 		this.isPowerup = isPowerup;
 	}

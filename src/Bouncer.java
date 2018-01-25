@@ -1,6 +1,13 @@
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Create a bouncer to be used in the Breakout game. The bouncer could collide with the walls, blocks,
+ * paddle and flippers.
+ * @author Siyuan Chen
+ *
+ */
+
 public class Bouncer {
 	
 	private Circle myCircle;
@@ -21,7 +28,7 @@ public class Bouncer {
 		setBouncerXSpeed(speed_x);
 		setBouncerYSpeed(speed_y);
 		
-		setMyCircle(new Circle(x,y, radius));
+		myCircle = new Circle(x,y, radius);
 	}
 	
 	/**
@@ -60,6 +67,37 @@ public class Bouncer {
 	}
 	
 	/**
+	 * check if bouncer hits a paddle
+	 * @param paddle the target paddle to check
+	 * @return whether the bouncer hits the paddle
+	 */
+	public boolean hitPaddle(Rectangle paddle) {
+		return myCircle.getBoundsInParent().intersects(paddle.getBoundsInParent());
+	}
+	
+	/**
+	 * count for the movement of the bouncer with the paddle before it leaves the paddle
+	 * @param paddle the target paddle that the bouncer resides on
+	 */
+	public void moveWithPaddle(Rectangle paddle) {
+		myCircle.setCenterX(paddle.getX()+paddle.getWidth()/2);
+		myCircle.setCenterY(paddle.getY() - 6);
+	}
+	
+	/**
+	 * check for intersection between the bouncer and two flippers, update bouncer's y-direction speed if
+	 * collision is detected
+	 * @param left left-side flipper in the game
+	 * @param right right-side flipper in the game
+	 */
+	public void intersectFlipper(Rectangle left, Rectangle right) {
+		if (myCircle.getBoundsInParent().intersects(left.getBoundsInParent()) ||
+        		myCircle.getBoundsInParent().intersects(right.getBoundsInParent())) {
+    			bouncerYSpeed = Math.abs(bouncerYSpeed)  * -1;
+    		}
+	}
+	
+	/**
 	 * initialize the bouncer to make it move
 	 * @param speed_x x-direction speed
 	 * @param speed_y y-direction speed
@@ -68,35 +106,59 @@ public class Bouncer {
 		setBouncerXSpeed(speed_x);
 		setBouncerYSpeed(speed_y);
 	}
-
+	
+	/**
+	 * getter for myCircle
+	 * @return myCircle
+	 */
 	public Circle getMyCircle() {
 		return myCircle;
 	}
-
-	public void setMyCircle(Circle myCircle) {
-		this.myCircle = myCircle;
-	}
-
+	
+	/**
+	 * getter for bouncerXSpeed
+	 * @return bouncerXSpeed
+	 */
 	public int getBouncerXSpeed() {
 		return bouncerXSpeed;
 	}
-
+	
+	/**
+	 * setter for bouncerXSpeed
+	 * @param bouncerXSpeed input speed
+	 */
 	public void setBouncerXSpeed(int bouncerXSpeed) {
 		this.bouncerXSpeed = bouncerXSpeed;
 	}
 
+	/**
+	 * getter for bouncerYSpeed
+	 * @return bouncerYSpeed
+	 */
 	public int getBouncerYSpeed() {
 		return bouncerYSpeed;
 	}
-
+	
+	/**
+	 * setter for bouncerYSpeed
+	 * @param bouncerYSpeed input speed
+	 */
 	public void setBouncerYSpeed(int bouncerYSpeed) {
 		this.bouncerYSpeed = bouncerYSpeed;
 	}
 
+	/**
+	 * getter for isIronDestroyer 
+	 * @return isIronDestroyer (boolean variable for whether the bouncer could destroy iron blocks)
+	 */
 	public boolean isIronDestroyer() {
 		return isIronDestroyer;
 	}
-
+	
+	/**
+	 * setter for isIronDestroyer
+	 * @param isIronDestroyer input boolean
+	 */
 	public void setIronDestroyer(boolean isIronDestroyer) {
 		this.isIronDestroyer = isIronDestroyer;
 	}

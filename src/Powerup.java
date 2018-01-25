@@ -1,6 +1,13 @@
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/**
+ * Create Powerup object to be used in Breakout game. Powerups have 5 types and each type has distinct
+ * effects.
+ * @author Siyuan Chen
+ *
+ */
+
 public class Powerup {
 	private Circle myPowerup;
 	private final int SPEED_Y = 70;
@@ -14,7 +21,7 @@ public class Powerup {
 	 * @param type type number
 	 */
 	public Powerup(double xpos, double ypos, int type) {
-		setMyPowerup(new Circle(xpos, ypos, RADIUS));
+		myPowerup = new Circle(xpos, ypos, RADIUS);
 		switch (type) {
 		case 1:getMyPowerup().setFill(Color.RED);
 		break;
@@ -38,19 +45,19 @@ public class Powerup {
 		getMyPowerup().setCenterY(elapsedTime * SPEED_Y + getMyPowerup().getCenterY());
 	}
 	
+	/**
+	 * getter for myType
+	 * @return myType
+	 */
 	public int getMyType() {
 		return myType;
 	}
 
-	public void setMyType(int myType) {
-		this.myType = myType;
-	}
-
+	/**
+	 * getter for myPowerup
+	 * @return myPowerup
+	 */
 	public Circle getMyPowerup() {
 		return myPowerup;
-	}
-
-	public void setMyPowerup(Circle myPowerup) {
-		this.myPowerup = myPowerup;
 	}
 }
