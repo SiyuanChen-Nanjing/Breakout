@@ -2,7 +2,7 @@
 Breakout
 ====
 ## High Level Design Goals
-* There will be a total of three levels in the game. With each level, the game will get harder as the block gets closer and "iron blocks" that could not be destroyed increases.
+* There will be a total of three levels in the game. With each level, the game will get harder as the block gets closer and the number of "iron blocks" that could not be destroyed increases.
 * The addition of flippers to the game makes the controls more complicated thus more challenging. Flippers would also become very useful for veteran players, so they bring a lot of potential to the game.
 * The "bomb" blocks incorporates of the black ball in pool games, i.e. they are intended to be hit last so that their negative effect will not affect the player during the entire level.
 * Powerups are rare, but each type has the same probability to appear. Some are more powerful than others so that increases randomness of the game.

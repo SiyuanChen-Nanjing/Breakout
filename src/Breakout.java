@@ -437,12 +437,12 @@ public class Breakout extends Application {
     		if (myBouncer.getBouncerXSpeed() == 0 && myBouncer.getBouncerYSpeed() == 0) myBouncer.moveWithPaddle(myPaddle);
         if (myBouncer.hitPaddle(myPaddle)) myBouncer.setBouncerYSpeed(Math.abs(myBouncer.getBouncerYSpeed()) * -1);
         else if (myBouncer.getMyCircle().getCenterY() + myBouncer.getMyCircle().getRadius() + myBouncer.getBouncerYSpeed() * elapsedTime > SIZE - 3) {
-    			loseLife(elapsedTime);
+    			loseLife();
         }
     }
     
     // reset paddle and bouncer, reduce remaining life or lose the game when a bouncer is lost;
-    private void loseLife(double elapsedTime) {
+    private void loseLife() {
     		myRoot.getChildren().remove(myBouncer.getMyCircle());
 		if (numLife>0) {
 			resetPaddle();

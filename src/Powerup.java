@@ -39,5 +39,13 @@ public abstract class Powerup {
 		return myPowerup;
 	}
 	
+	/**
+	 * allow the specific powerup to take effect
+	 * @param paddle current functioning paddle in the game
+	 * @param bouncer current functioning bouncer in the game
+	 * @param life current number of lives left for the player
+	 * @param paddle_speed current speed of paddle
+	 * @param isWarp whether the current paddle could warp from one edge to the other
+	 */
 	public abstract void takeEffect(Rectangle paddle, Bouncer bouncer, int life, int paddle_speed, boolean isWarp);
 }
